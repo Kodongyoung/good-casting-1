@@ -5,13 +5,15 @@ import GlobalContext from '../../context/GlobalContext';
 import imgL from '../../assets/image/logo-main-black.png';
 import Logo from '../Logo';
 import { useDispatch } from 'react-redux';
-import { getProducerInfo } from '../../state/reducer/producer.reducer';
+import { getActorInfo } from '../../state/reducer/actor.reducer';
 
 const ActorSidebar = () => {
     const gContext = useContext(GlobalContext);
+
     const dispatch = useDispatch();
+
     useEffect(() => {
-        dispatch(getProducerInfo());
+        dispatch(getActorInfo());
     }, []);
 
     return (
@@ -22,8 +24,12 @@ const ActorSidebar = () => {
                         <Logo white={gContext.header.theme === 'dark'} />
                     </div>
                     <div className="my-15 px-11">
-                        <Link to="/profile-register" className="btn btn-primary btn-xl w-100 text-uppercase">
-                            <span className="mr-5 d-inline-block">+</span>프로필 등록하기
+                        <Link
+                            to="/actor-register"
+                            className="btn btn-primary btn-xl w-100 text-uppercase"
+                        >
+                            <span className="mr-5 d-inline-block">+</span>프로필
+                            등록하기
                         </Link>
                     </div>
                     <ul className="list-unstyled dashboard-layout-sidebar">
@@ -44,9 +50,6 @@ const ActorSidebar = () => {
                                 className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
                             >
                                 <i className="fas fa-user mr-7"></i>지원 리스트
-                                <span className="ml-auto px-1 h-1 bg-dodger text-white font-size-3 rounded-5 max-height-px-18 flex-all-center">
-                                    14
-                                </span>
                             </Link>
                         </li>
                         <li className="">
@@ -56,6 +59,15 @@ const ActorSidebar = () => {
                                 className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
                             >
                                 <i className="fas fa-cog mr-7"></i>정보수정
+                            </Link>
+                        </li>
+                        <li className="">
+                            <Link
+                                to="/user-info"
+                                activeClassName="active"
+                                className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+                            >
+                                <i className="fas fa-cog mr-7"></i>비밀번호 변경
                             </Link>
                         </li>
                     </ul>

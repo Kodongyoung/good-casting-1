@@ -16,13 +16,20 @@ const HireList = () => {
         dispatch(hireList(pageRequest));
     }, [reset]);
 
+    console.log(dtoList);
     return (
         <>
             {dtoList.map((hire) => {
                 return (
-                    <ul key={hire.hireId} style={{ listStyleType: 'none', paddingLeft: '0' }}>
+                    <ul
+                        key={hire.hireId}
+                        style={{ listStyleType: 'none', paddingLeft: '0' }}
+                    >
                         <li>
-                            <Link state={{ id: hire.hireId }} to={`/hire-detail`}>
+                            <Link
+                                state={{ id: hire.hireId }}
+                                to={`/hire-detail`}
+                            >
                                 <div
                                     style={{ width: '830px' }}
                                     className="pt-6 px-xl-6 px-lg-6 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 "
@@ -32,23 +39,18 @@ const HireList = () => {
                                             <div className="media align-items-center">
                                                 <div>
                                                     <h3 className="mb-0">
-                                                        <Link className="font-size-6 heading-default-color">{hire.project}</Link>
+                                                        <Link className="font-size-6 heading-default-color">
+                                                            {hire.project}
+                                                        </Link>
                                                     </h3>
-                                                    <Link to="/#" className="font-size-3 text-default-color line-height-2">
-                                                        AirBnb
+                                                    <Link
+                                                        to="/#"
+                                                        className="font-size-3 text-default-color line-height-2"
+                                                    >
+                                                        {hire.producerAgency}
                                                     </Link>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6 text-right pt-7 pt-md-5">
-                                        <div className="media justify-content-md-end">
-                                            <div className="image mr-5 mt-2">
-                                                <img src={imgF} alt="" />
-                                            </div>
-                                            <p className="font-weight-bold font-size-7 text-hit-gray mb-0">
-                                                <span className="text-black-2">80-90K</span> PLN
-                                            </p>
                                         </div>
                                     </div>
                                     <div className="row pt-8">
@@ -73,21 +75,17 @@ const HireList = () => {
                                                             margin-top: -2px;
                                                         `}
                                                     >
-                                                        <img src={iconL} alt="" />
+                                                        <img
+                                                            src={iconC}
+                                                            alt=""
+                                                        />
                                                     </span>
-                                                    <span className="font-weight-semibold">Berlyn, UK</span>
-                                                </li>
-
-                                                <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                    <span
-                                                        className="mr-4"
-                                                        css={`
-                                                            margin-top: -2px;
-                                                        `}
-                                                    >
-                                                        <img src={iconC} alt="" />
+                                                    <span className="font-weight-semibold">
+                                                        {hire.modDate.slice(
+                                                            0,
+                                                            10
+                                                        )}
                                                     </span>
-                                                    <span className="font-weight-semibold">{hire.modDate.slice(0, 10)}</span>
                                                 </li>
                                             </ul>
                                         </div>

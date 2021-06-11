@@ -3,44 +3,41 @@ import Swal from 'sweetalert2';
 import applyService from '../service/apply.service';
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
-export const applicantList = createAsyncThunk('APPLICANTLIST', async (pageRequest) => {
-    console.log('------------APPLICANT_LIST---------------');
-    console.log(pageRequest);
-    console.log('-----------------------------------------');
-    const response = await applyService.applicantist(pageRequest);
-    return response.data;
-});
-
-export const hireApply = createAsyncThunk('HIRE_APPLY', async (apply, { rejectWithValue }) => {
-    console.log('------------HIRE_APPLY---------------');
-    console.log(apply);
-    console.log('------------------------------------');
-
-    try {
-        const response = await applyService.hireApply(apply);
-
+export const applicantList = createAsyncThunk(
+    'APPLICANTLIST',
+    async (pageRequest) => {
+        const response = await applyService.applicantist(pageRequest);
         return response.data;
-    } catch (e) {
-        return rejectWithValue(e.response.data);
     }
-});
+);
 
-export const rejectApplicant = createAsyncThunk('REJECT_APPLICANT', async (id) => {
-    const response = await applyService.rejectApplicant(id);
-    return response.data;
-});
+export const hireApply = createAsyncThunk(
+    'HIRE_APPLY',
+    async (apply, { rejectWithValue }) => {
+        try {
+            const response = await applyService.hireApply(apply);
+            return response.data;
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
+    }
+);
+
+export const rejectApplicant = createAsyncThunk(
+    'REJECT_APPLICANT',
+    async (id) => {
+        const response = await applyService.rejectApplicant(id);
+        return response.data;
+    }
+);
 
 export const applylist = createAsyncThunk('APPLYTLIST', async (pageRequest) => {
-    console.log('reducer appllyList() pageRequest: ' + JSON.stringify(pageRequest));
     const response = await applyService.applylist(pageRequest);
-
     return response.data;
 });
 
 export const deleteApply = createAsyncThunk('DELETE_APPLY', async (id) => {
-    console.log('DELETE_APPLY: ' + JSON.stringify(id));
     const response = await applyService.applyDelete(id);
-    console.log('deleteApply: ' + response.data);
     return response.data;
 });
 
@@ -110,6 +107,12 @@ const applySlice = createSlice({
                 Swal.fire({
                     icon: 'success',
                     title: '불합격 처리되었습니다.',
+                });
+            })
+            .addCase(deleteApply.fulfilled, (state) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '지원이 취소되었습니다.',
                 });
             });
     },

@@ -41,14 +41,27 @@ const DragNDropComponent = ({ pageRequest }) => {
                     {fileList.length ? (
                         <img
                             style={{ width: '150px', height: '200px' }}
-                            src={'http://localhost:8080/files/display?fileName=s_' + fileList[0].uuid + '_' + fileList[0].fileName}
+                            src={
+                                'http://localhost:8080/files/display?fileName=s_' +
+                                fileList[0].uuid +
+                                '_' +
+                                fileList[0].fileName
+                            }
                         />
                     ) : (
                         <>
-                            <label htmlFor="fileUpload" className="mb-0 font-size-4 text-smoke">
-                                Browse or Drag and Drop
+                            <label
+                                htmlFor="fileUpload"
+                                className="mb-0 font-size-4 text-smoke"
+                            >
+                                캐릭터 사진을 <br/>넣어주세요
                             </label>
-                            <input type="file" id="fileUpload" className="sr-only" onChange={uploadAjax} />
+                            <input
+                                type="file"
+                                id="fileUpload"
+                                className="sr-only"
+                                onChange={uploadAjax}
+                            />
                         </>
                     )}
                 </div>

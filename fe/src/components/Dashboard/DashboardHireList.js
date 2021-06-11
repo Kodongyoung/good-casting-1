@@ -2,11 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import { Link, navigate } from 'gatsby';
 import { Select } from '../Core';
 import { useSelector, useDispatch } from 'react-redux';
-import { hireSelector, hireDelete, hireList, resetStatus } from '../../state/reducer/hire.reducer';
+import {
+    hireSelector,
+    hireDelete,
+    hireList,
+    resetStatus,
+} from '../../state/reducer/hire.reducer';
 import PageListComponent from '../Core/PageList';
 
 const defaultJobs = [
-    { value: 'current', label: '선택하세요' },
     { value: 'all', label: '전체' },
     { value: 'project', label: '프로젝트별' },
     { value: 'deadline', label: '마감순' },
@@ -19,7 +23,10 @@ const DashboardHireList = () => {
     const pageResult = useSelector(hireSelector).pageResult;
     const { status } = useSelector(hireSelector);
 
-    const userInfo = typeof window !== `undefined` ? JSON.parse(localStorage.getItem('USER')) : null;
+    const userInfo =
+        typeof window !== `undefined`
+            ? JSON.parse(localStorage.getItem('USER'))
+            : null;
 
     useEffect(() => {
         dispatch(
@@ -31,10 +38,6 @@ const DashboardHireList = () => {
         dispatch(resetStatus());
     }, [status]);
 
-    console.log('-----------------------------------------');
-    console.log(pageResult.dtoList);
-    console.log('-----------------------------------------');
-
     return (
         <>
             <div className="container">
@@ -45,7 +48,9 @@ const DashboardHireList = () => {
                         </div>
                         <div className="col-lg-6">
                             <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
-                                <p className="font-size-4 mb-0 mr-6 py-2">검색 :</p>
+                                <p className="font-size-4 mb-0 mr-6 py-2">
+                                    검색 :
+                                </p>
                                 <div className="h-px-48">
                                     <Select
                                         options={defaultJobs}
@@ -61,24 +66,42 @@ const DashboardHireList = () => {
                             <table className="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col" className="pl-0 border-0 font-size-4 font-weight-normal">
+                                        <th
+                                            scope="col"
+                                            className="pl-0 border-0 font-size-4 font-weight-normal"
+                                        >
                                             프로젝트명
                                         </th>
-                                        <th scope="col" className="pl-4 border-0 font-size-4 font-weight-normal">
+                                        <th
+                                            scope="col"
+                                            className="pl-4 border-0 font-size-4 font-weight-normal"
+                                        >
                                             모집 역할
                                         </th>
-                                        <th scope="col" className="pl-4 border-0 font-size-4 font-weight-normal">
+                                        <th
+                                            scope="col"
+                                            className="pl-4 border-0 font-size-4 font-weight-normal"
+                                        >
                                             업로드일
                                         </th>
-                                        <th scope="col" className="pl-4 border-0 font-size-4 font-weight-normal">
+                                        <th
+                                            scope="col"
+                                            className="pl-4 border-0 font-size-4 font-weight-normal"
+                                        >
                                             마감일
                                         </th>
-                                        <th scope="col" className="pl-4 border-0 font-size-4 font-weight-normal">
+                                        <th
+                                            scope="col"
+                                            className="pl-4 border-0 font-size-4 font-weight-normal"
+                                        >
                                             모집인원
                                         </th>
-                                        <th scope="col" className="pl-4 border-0 font-size-4 font-weight-normal">
+                                        {/* <th
+                                            scope="col"
+                                            className="pl-4 border-0 font-size-4 font-weight-normal"
+                                        >
                                             지원자수
-                                        </th>
+                                        </th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,15 +109,26 @@ const DashboardHireList = () => {
                                         pageResult.dtoList.map((hire) => {
                                             return (
                                                 <>
-                                                    <tr className="border border-color-2" key={hire.hireId}>
-                                                        <th scope="row" className="pl-6 border-0 py-7 min-width-px-235">
+                                                    <tr
+                                                        className="border border-color-2"
+                                                        key={hire.hireId}
+                                                    >
+                                                        <th
+                                                            scope="row"
+                                                            className="pl-6 border-0 py-7 min-width-px-235"
+                                                        >
                                                             <div className="">
                                                                 <Link
-                                                                    state={{ id: hire.hireId }}
+                                                                    state={{
+                                                                        id:
+                                                                            hire.hireId,
+                                                                    }}
                                                                     to="/hire-detail"
                                                                     className="font-size-4 mb-0 font-weight-semibold text-black-2"
                                                                 >
-                                                                    {hire.project}
+                                                                    {
+                                                                        hire.project
+                                                                    }
                                                                 </Link>
                                                             </div>
                                                         </th>
@@ -105,12 +139,18 @@ const DashboardHireList = () => {
                                                         </td>
                                                         <td className="table-y-middle py-7 min-width-px-125">
                                                             <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                                                                {hire.regDate.slice(0, 10)}
+                                                                {hire.regDate.slice(
+                                                                    0,
+                                                                    10
+                                                                )}
                                                             </h3>
                                                         </td>
                                                         <td className="table-y-middle py-7 min-width-px-155">
                                                             <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                                                                {hire.deadline.slice(0, 10)}
+                                                                {hire.deadline.slice(
+                                                                    0,
+                                                                    10
+                                                                )}
                                                             </h3>
                                                         </td>
                                                         <td className="table-y-middle py-7 min-width-px-125">
@@ -118,13 +158,19 @@ const DashboardHireList = () => {
                                                                 {hire.personnel}
                                                             </h3>
                                                         </td>
-                                                        <td className="table-y-middle py-7 min-width-px-205">
-                                                            <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">어찌할꺼야?</h3>
-                                                        </td>
+                                                        {/* <td className="table-y-middle py-7 min-width-px-205">
+                                                            <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
+                                                                어찌할꺼야?
+                                                            </h3>
+                                                        </td> */}
                                                         <td className="table-y-middle py-7 min-width-px-80">
                                                             <Link
                                                                 to="/hire-modify"
                                                                 className="font-size-3 font-weight-bold text-green text-uppercase"
+                                                                state={{
+                                                                    hireId:
+                                                                        hire.hireId,
+                                                                }}
                                                             >
                                                                 수정하기
                                                             </Link>
@@ -133,9 +179,15 @@ const DashboardHireList = () => {
                                                             <a
                                                                 href="#"
                                                                 className="font-size-3 font-weight-bold text-red-2 text-uppercase"
-                                                                onClick={(e) => {
+                                                                onClick={(
+                                                                    e
+                                                                ) => {
                                                                     e.preventDefault();
-                                                                    dispatch(hireDelete(hire.hireId));
+                                                                    dispatch(
+                                                                        hireDelete(
+                                                                            hire.hireId
+                                                                        )
+                                                                    );
                                                                 }}
                                                             >
                                                                 삭제하기
@@ -151,7 +203,11 @@ const DashboardHireList = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <PageListComponent pageRequest={pageRequest} pageResult={pageResult} flag={'applicantList'} />
+                        <PageListComponent
+                            pageRequest={pageRequest}
+                            pageResult={pageResult}
+                            flag={'applicantList'}
+                        />
                     </div>
                 </div>
             </div>

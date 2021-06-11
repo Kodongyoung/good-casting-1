@@ -3,28 +3,53 @@ import Swal from 'sweetalert2';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
-export const signup = createAsyncThunk('SIGN_UP', async (arg, { rejectWithValue }) => {
-    console.log('reducer signup() arg: ' + JSON.stringify(arg));
+export const signup = createAsyncThunk(
+    'SIGN_UP',
+    async (arg, { rejectWithValue }) => {
+        if (arg.password.trim().length === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: '유효하지 않은 비밀번호입니다.',
+                text: '다른 비밀번호를 입력해주세요',
+            });
+        }
 
-    try {
-        const response = await userService.signup(arg);
-        return response.data;
-    } catch (e) {
-        return rejectWithValue(e.response.data);
+        if (arg.username.trim().length === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: '유효하지 않은 아이디입니다.',
+                text: '다른 아이디를 입력해주세요',
+            });
+        }
+
+        try {
+            const response = await userService.signup(arg);
+            return response.data;
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
     }
-});
+);
 
 export const signin = createAsyncThunk('SIGN_IN', async (arg) => {
     console.log('reducer signin() arg: ' + JSON.stringify(arg));
     const response = await userService.signin(arg);
 
     if (response.data[0].token === 'Wrong password') {
-        alert('비밀번호를 다시 입력해주세요');
         return;
     }
-
     return response.data;
 });
+
+export const updateUserInfo = createAsyncThunk(
+    'UPDATE_USER_INFO',
+    async (user) => {
+        console.log(user);
+        const response = await userService.update(user);
+
+        return response.data;
+    }
+);
 
 const userSlice = createSlice({
     name: 'user',
@@ -56,22 +81,35 @@ const userSlice = createSlice({
                         text: '다른 아이디를 입력해주세요',
                         footer: '<a href>Why do I have this issue?</a>',
                     });
-                } else if (payload.message.includes('Validation') || null) {
+                }
+                if (payload.message.includes('Validation') || null) {
                     Swal.fire({
                         icon: 'error',
                         title: '유효하지 않은 정보입니다.',
                         text: '다른 정보를 입력해주세요',
                         footer: '<a href>Why do I have this issue?</a>',
                     });
-                } else {
-                    alert('다른 에러');
                 }
             })
             .addCase(signin.fulfilled, (state, { payload }) => {
-                console.log('로그인() payload: ' + JSON.stringify(payload));
-                localStorage.setItem('TOKEN', 'Bearer ' + payload[0].token);
-                localStorage.setItem('USER', JSON.stringify(payload));
-                state.loggedIn = !state.loggedIn;
+                if (payload !== undefined) {
+                    localStorage.setItem('TOKEN', 'Bearer ' + payload[0].token);
+                    localStorage.setItem('USER', JSON.stringify(payload));
+                    state.loggedIn = !state.loggedIn;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '비밀번호를 다시 입력해주세요.',
+                    });
+                }
+            })
+            .addCase(updateUserInfo.fulfilled, (state, { payload }) => {
+                if (!payload) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '현재 비밀번호가 일치하지 않습니다.',
+                    });
+                }
             });
     },
 });

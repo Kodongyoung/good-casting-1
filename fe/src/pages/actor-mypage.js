@@ -1,19 +1,27 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import PageListComponent from '../components/Core/PageList';
 
 import PageWrapper from '../components/PageWrapper';
 
 import MyProfileList from '../components/Profile/MyprofileList';
-import { resetProfileSelector } from '../state/reducer/profile.reducer';
+import {
+    profileSelector,
+    resetProfileSelector,
+} from '../state/reducer/profile.reducer';
 
 const DashboardMain = () => {
     const dispatch = useDispatch();
+
+    const pageRequest = useSelector(profileSelector).pageRequest;
+    const pageResult = useSelector(profileSelector).pageResult;
 
     useEffect(() => {
         return () => {
             dispatch(resetProfileSelector());
         };
     }, []);
+
     return (
         <>
             <PageWrapper
@@ -29,6 +37,11 @@ const DashboardMain = () => {
                         <div className="row mb-7">
                             <MyProfileList />
                         </div>
+                        <PageListComponent
+                            pageRequest={pageRequest}
+                            pageResult={pageResult}
+                            flag="hireList"
+                        />
                     </div>
                 </div>
             </PageWrapper>

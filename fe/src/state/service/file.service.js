@@ -8,7 +8,7 @@ const fileRegister = (formData) => {
         method: 'post',
         data: formData,
         headers: {
-            Authorization: 'JWT fefege..',
+            Authorization: localStorage.getItem('TOKEN'),
             'Content-Type': 'multipart/form-data',
         },
     });

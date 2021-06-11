@@ -23,7 +23,7 @@ const hireDelete = (id) => {
     return axios({
         url: `${SERVER}/hires/delete/${id}`,
         method: 'delete',
-        headers: { Authorization: 'JWT fefege..' },
+        Authorization: localStorage.getItem('TOKEN'),
     });
 };
 
@@ -38,4 +38,16 @@ const hireRegister = (arg) => {
         },
     });
 };
-export default { hireList, hireDetail, hireDelete, hireRegister };
+
+const hireUpdate = (arg) => {
+    return axios({
+        url: `${SERVER}/hires/update`,
+        method: 'put',
+        data: arg,
+        headers: {
+            Authorization: localStorage.getItem('TOKEN'),
+        },
+    });
+};
+
+export default { hireList, hireDetail, hireDelete, hireRegister, hireUpdate };

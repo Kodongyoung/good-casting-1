@@ -29,22 +29,28 @@ const SearchGrid = () => {
                             <div className="col-12 col-lg-4 col-md-5 col-xs-8">
                                 <HireListSidebar pageRequest={pageRequest} />
                             </div>
-                            {/* <!-- Main Body --> */}
                             <div className="col-12 col-xl-8 col-lg-8">
-                                {/* <!-- form --> */}
                                 <ActorSearch pageRequest={pageRequest} />
-
                                 <div className="pt-12">
                                     <div className="d-flex align-items-center justify-content-between mb-6">
                                         <h5 className="font-size-4 font-weight-normal text-gray">
-                                            <span className="heading-default-color">{pageResult.totalElement}</span>
-                                            results for <span className="heading-default-color">Actor</span>
+                                            <span className="heading-default-color">
+                                                {pageResult.totalElement}
+                                            </span>
+                                            개의 공고 모집중
                                         </h5>
                                     </div>
                                     <div className="mb-8">
-                                        <HireList pageResult={pageResult} pageRequest={pageRequest} />
+                                        <HireList
+                                            pageResult={pageResult}
+                                            pageRequest={pageRequest}
+                                        />
                                     </div>
-                                    <PageListComponent pageRequest={pageRequest} pageResult={pageResult} flag="hireList" />
+                                    <PageListComponent
+                                        pageRequest={pageRequest}
+                                        pageResult={pageResult}
+                                        flag="hireList"
+                                    />
                                 </div>
                             </div>
                         </div>
