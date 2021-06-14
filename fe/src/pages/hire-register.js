@@ -4,11 +4,7 @@ import { navigate } from 'gatsby';
 import PageWrapper from '../components/PageWrapper';
 import FileUpload from '../components/Core/FileUpload';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    hireRegister,
-    hireSelector,
-    resetStatus,
-} from '../state/reducer/hire.reducer';
+import { hireRegister, hireSelector, resetStatus } from '../state/reducer/hire.reducer';
 import { producerSelector } from '../state/reducer/producer.reducer';
 import { fileSelector } from '../state/reducer/file.reducer';
 import '../scss/css/fileUpload.css';
@@ -19,8 +15,7 @@ const HireRegister = () => {
 
     const fileState = useSelector(fileSelector);
     const { status } = useSelector(hireSelector);
-
-    const { producerId } = JSON.parse(localStorage.getItem('USER'))[1];
+    const [producerId, setProducerId] = useState(0);
 
     const [inputs, setInputs] = useState({
         producer: { producerId: producerId },
@@ -44,6 +39,10 @@ const HireRegister = () => {
         },
         [inputs]
     );
+
+    useEffect(() => {
+        setProducerId(JSON.parse(localStorage.getItem('USER'))[1].producerId);
+    }, []);
 
     useEffect(() => {
         setInputs({
@@ -82,9 +81,7 @@ const HireRegister = () => {
                                         className="d-flex align-items-center ml-4"
                                     >
                                         <i className="icon icon-smaxwll-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8" />
-                                        <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                                            Back
-                                        </span>
+                                        <span className="text-uppercase font-size-3 font-weight-bold text-gray">Back</span>
                                     </a>
                                 </div>
                             </div>
@@ -108,16 +105,10 @@ const HireRegister = () => {
                                                 onChange={handleChange}
                                                 value={inputs.title}
                                             />
-                                            <FileUpload
-                                                setImages={setImages}
-                                                image={image}
-                                            />
+                                            <FileUpload setImages={setImages} image={image} />
                                         </div>
                                         <hr />
-                                        <Tab.Container
-                                            id="left-tabs-example"
-                                            defaultActiveKey="jobs"
-                                        >
+                                        <Tab.Container id="left-tabs-example" defaultActiveKey="jobs">
                                             <Tab.Content className="pl-12 pt-10 pb-7 pr-12 pr-xxl-24">
                                                 <Tab.Pane eventKey="jobs">
                                                     <fieldset>
@@ -128,14 +119,9 @@ const HireRegister = () => {
                                                                         htmlFor="namedash"
                                                                         className="d-block text-black-2 font-size-4 font-weight-semibold mb-4"
                                                                     >
-                                                                        촬영
-                                                                        날짜
+                                                                        촬영 날짜
                                                                     </label>
-                                                                    <DatePickerComponent
-                                                                        setDate={
-                                                                            setFilming
-                                                                        }
-                                                                    />
+                                                                    <DatePickerComponent setDate={setFilming} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-lg-6">
@@ -146,11 +132,7 @@ const HireRegister = () => {
                                                                     >
                                                                         마감날짜
                                                                     </label>
-                                                                    <DatePickerComponent
-                                                                        setDate={
-                                                                            setDeadline
-                                                                        }
-                                                                    />
+                                                                    <DatePickerComponent setDate={setDeadline} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-lg-6">
@@ -166,12 +148,8 @@ const HireRegister = () => {
                                                                         className="form-control h-px-48"
                                                                         id="namedash"
                                                                         name="project"
-                                                                        onChange={
-                                                                            handleChange
-                                                                        }
-                                                                        value={
-                                                                            inputs.project
-                                                                        }
+                                                                        onChange={handleChange}
+                                                                        value={inputs.project}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -188,12 +166,8 @@ const HireRegister = () => {
                                                                         className="form-control h-px-48"
                                                                         id="namedash"
                                                                         name="personnel"
-                                                                        onChange={
-                                                                            handleChange
-                                                                        }
-                                                                        value={
-                                                                            inputs.personnel
-                                                                        }
+                                                                        onChange={handleChange}
+                                                                        value={inputs.personnel}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -212,12 +186,8 @@ const HireRegister = () => {
                                                                         className="form-control h-px-48"
                                                                         id="namedash"
                                                                         name="cast"
-                                                                        onChange={
-                                                                            handleChange
-                                                                        }
-                                                                        value={
-                                                                            inputs.cast
-                                                                        }
+                                                                        onChange={handleChange}
+                                                                        value={inputs.cast}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -234,12 +204,8 @@ const HireRegister = () => {
                                                                         className="form-control h-px-48"
                                                                         id="namedash"
                                                                         name="guarantee"
-                                                                        onChange={
-                                                                            handleChange
-                                                                        }
-                                                                        value={
-                                                                            inputs.guarantee
-                                                                        }
+                                                                        onChange={handleChange}
+                                                                        value={inputs.guarantee}
                                                                     />
                                                                     <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6" />
                                                                 </div>
@@ -262,12 +228,8 @@ const HireRegister = () => {
                                                                         rows="7"
                                                                         className="border border-mercury text-gray w-100 pt-4 pl-6"
                                                                         placeholder="작품소개를 입력해주세요"
-                                                                        onChange={
-                                                                            handleChange
-                                                                        }
-                                                                        value={
-                                                                            inputs.contents
-                                                                        }
+                                                                        onChange={handleChange}
+                                                                        value={inputs.contents}
                                                                     />
                                                                 </div>
                                                             </div>

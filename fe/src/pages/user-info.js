@@ -8,7 +8,12 @@ import Swal from 'sweetalert2';
 
 const UserInfo = () => {
     const dispatch = useDispatch();
-    const userInfo = JSON.parse(localStorage.getItem('USER'));
+
+    const [userInfo, setUserInfo] = useState({});
+
+    useEffect(() => {
+        setUserInfo(JSON.parse(localStorage.getItem('USER')));
+    }, []);
 
     const [inputs, setInputs] = useState({
         currentPwd: '',
@@ -69,14 +74,9 @@ const UserInfo = () => {
                         <div className="mb-15 mb-lg-23">
                             <div className="row">
                                 <div className="col-xxxl-9 px-lg-13 px-6">
-                                    <h5 className="font-size-6 font-weight-semibold mb-11">
-                                        비밀번호 변경
-                                    </h5>
+                                    <h5 className="font-size-6 font-weight-semibold mb-11">비밀번호 변경</h5>
                                     <div className="contact-form bg-white shadow-8 rounded-4 pl-sm-10 pl-4 pr-sm-11 pr-4 pt-15 pb-13">
-                                        <form
-                                            onSubmit={handleSubmit}
-                                            method="post"
-                                        >
+                                        <form onSubmit={handleSubmit} method="post">
                                             <fieldset>
                                                 <div className="row mb-xl-1 mb-9">
                                                     <div className="col-lg-6">
@@ -91,13 +91,9 @@ const UserInfo = () => {
                                                                 type="text"
                                                                 className="form-control h-px-48"
                                                                 id="namedash"
-                                                                value={
-                                                                    inputs.currentPwd
-                                                                }
+                                                                value={inputs.currentPwd}
                                                                 name="currentPwd"
-                                                                onChange={
-                                                                    handleChange
-                                                                }
+                                                                onChange={handleChange}
                                                             />
                                                         </div>
                                                         <div className="form-group">
@@ -111,13 +107,9 @@ const UserInfo = () => {
                                                                 type="text"
                                                                 className="form-control h-px-48"
                                                                 id="namedash"
-                                                                value={
-                                                                    inputs.newPwd
-                                                                }
+                                                                value={inputs.newPwd}
                                                                 name="newPwd"
-                                                                onChange={
-                                                                    handleChange
-                                                                }
+                                                                onChange={handleChange}
                                                             />
                                                         </div>
                                                         <div className="form-group">
@@ -131,13 +123,9 @@ const UserInfo = () => {
                                                                 type="text"
                                                                 className="form-control h-px-48"
                                                                 id="namedash"
-                                                                value={
-                                                                    inputs.newPwdCheck
-                                                                }
+                                                                value={inputs.newPwdCheck}
                                                                 name="newPwdCheck"
-                                                                onChange={
-                                                                    handleChange
-                                                                }
+                                                                onChange={handleChange}
                                                             />
                                                         </div>
                                                     </div>
@@ -147,13 +135,7 @@ const UserInfo = () => {
                                                     <div className="col-md-12">
                                                         <button
                                                             onClick={(e) => {
-                                                                if (
-                                                                    checkValidate(
-                                                                        inputs.newPwd,
-                                                                        inputs.newPwdCheck,
-                                                                        inputs.currentPwd
-                                                                    )
-                                                                ) {
+                                                                if (checkValidate(inputs.newPwd, inputs.newPwdCheck, inputs.currentPwd)) {
                                                                     e.preventDefault();
                                                                 }
                                                             }}

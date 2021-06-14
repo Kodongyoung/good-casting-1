@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Nav, Tab } from 'react-bootstrap';
 import { navigate } from 'gatsby';
 import Swal from 'sweetalert2';
@@ -7,10 +7,13 @@ import PageWrapper from '../components/PageWrapper';
 import ProfileSidebar from '../components/ProfileSidebar';
 
 const CandidateProfile = ({ location }) => {
-    const userInfo =
-        typeof window !== `undefined`
-            ? JSON.parse(localStorage.getItem('USER'))
-            : null;
+    const userInfo = typeof window !== `undefined` ? JSON.parse(localStorage.getItem('USER')) : null;
+
+    const [profileId, setProfileId] = useState(0);
+
+    useEffect(() => {
+        setProfileId(location.state.id);
+    }, []);
 
     return (
         <>
@@ -26,10 +29,8 @@ const CandidateProfile = ({ location }) => {
                                             <button
                                                 style={{
                                                     background: 'transparent',
-                                                    boxShadow:
-                                                        '0px 0px 0px transparent',
-                                                    border:
-                                                        '0px solid transparent',
+                                                    boxShadow: '0px 0px 0px transparent',
+                                                    border: '0px solid transparent',
                                                     outline: 'none',
                                                 }}
                                                 onClick={() => {
@@ -38,22 +39,14 @@ const CandidateProfile = ({ location }) => {
                                                 className="d-flex align-items-center ml-4"
                                             >
                                                 <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                                                <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                                                    Back
-                                                </span>
+                                                <span className="text-uppercase font-size-3 font-weight-bold text-gray">Back</span>
                                             </button>
                                         </div>
                                     </div>
                                 </div>
-                                <Tab.Container
-                                    id="left-tabs-example"
-                                    defaultActiveKey="one"
-                                >
+                                <Tab.Container id="left-tabs-example" defaultActiveKey="one">
                                     <div className="bg-white rounded-4 shadow-9">
-                                        <Nav
-                                            className="nav border-bottom border-mercury pl-12"
-                                            role="tablist"
-                                        >
+                                        <Nav className="nav border-bottom border-mercury pl-12" role="tablist">
                                             <li className="tab-menu-items nav-item pr-12">
                                                 <Nav.Link
                                                     eventKey="one"
@@ -64,8 +57,7 @@ const CandidateProfile = ({ location }) => {
                                             </li>
                                             <li className="tab-menu-items nav-item pr-12">
                                                 {userInfo !== null ? (
-                                                    userInfo[1].actorId ===
-                                                    undefined ? (
+                                                    userInfo[1].actorId === undefined ? (
                                                         <Nav.Link
                                                             eventKey="two"
                                                             className="text-uppercase font-size-3 font-weight-bold text-default-color py-3 px-0"
@@ -81,8 +73,7 @@ const CandidateProfile = ({ location }) => {
                                                         onClick={() => {
                                                             Swal.fire({
                                                                 icon: 'error',
-                                                                title:
-                                                                    '로그인해주세요!',
+                                                                title: '로그인해주세요!',
                                                             });
                                                         }}
                                                     >
@@ -93,9 +84,7 @@ const CandidateProfile = ({ location }) => {
                                         </Nav>
                                         <Tab.Content>
                                             <Tab.Pane eventKey="one">
-                                                <ProfileSidebar
-                                                    id={location.state.id}
-                                                />
+                                                <ProfileSidebar id={profileId} />
                                             </Tab.Pane>
                                             <Tab.Pane eventKey="two">
                                                 <div className="pr-xl-11 p-5 pl-xs-12 pt-9 pb-11">

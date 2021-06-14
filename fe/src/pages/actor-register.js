@@ -9,25 +9,17 @@ import FileUploads from '../components/Core/FileUploads';
 import PageWrapper from '../components/PageWrapper';
 
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    profileRegister,
-    profileSelector,
-    resetStatus,
-} from '../state/reducer/profile.reducer';
-import {
-    fileSelector,
-    resetFile,
-    setFirst,
-} from '../state/reducer/file.reducer';
+import { profileRegister, profileSelector, resetStatus } from '../state/reducer/profile.reducer';
+import { fileSelector, resetFile, setFirst } from '../state/reducer/file.reducer';
 
 import '../scss/css/fileUpload.css';
 
 const ProfileRegister = () => {
     const dispatch = useDispatch();
+    const [actorState, setActorState] = useState({});
 
     const profileState = useSelector(profileSelector);
     const fileList = useSelector(fileSelector).fileList;
-    const actorState = JSON.parse(localStorage.getItem('USER'));
     const { status } = useSelector(profileSelector);
 
     const [image, setImages] = useState(null);
@@ -36,6 +28,8 @@ const ProfileRegister = () => {
     });
 
     useEffect(() => {
+        setActorState(JSON.parse(localStorage.getItem('USER')));
+
         return () => {
             dispatch(resetFile());
         };
@@ -98,16 +92,11 @@ const ProfileRegister = () => {
                     <div className="container">
                         <div className="mb-15 mb-lg-23">
                             <div className="dashboard-main-container mt-25 mt-lg-31">
-                                <h5 className="font-size-6 font-weight-semibold mb-11">
-                                    프로필 등록
-                                </h5>
+                                <h5 className="font-size-6 font-weight-semibold mb-11">프로필 등록</h5>
                                 <div className="contact-form bg-white shadow-8 rounded-4 pl-sm-10 pl-4 pr-sm-11 pr-4 pt-15 pb-13">
                                     <div className="upload-file mb-16 text-center">
                                         <div className="m-auto px-6 mb-7">
-                                            <FileUpload
-                                                setImages={setImages}
-                                                image={image}
-                                            />
+                                            <FileUpload setImages={setImages} image={image} />
                                         </div>
                                         <p>※ 프로필 사진을 등록해주세요</p>
                                     </div>
@@ -118,8 +107,7 @@ const ProfileRegister = () => {
                                                     htmlFor="aboutTextarea"
                                                     className="d-block text-black-2 font-size-4 font-weight-semibold mb-4"
                                                 >
-                                                    추가 사진 / 연기 동영상
-                                                    업로드
+                                                    추가 사진 / 연기 동영상 업로드
                                                 </label>
                                                 <FileUploads image={image} />
                                             </div>
@@ -166,12 +154,8 @@ const ProfileRegister = () => {
                                                         control={
                                                             <Switch
                                                                 color="primary"
-                                                                checked={
-                                                                    inputs.privacy
-                                                                }
-                                                                onChange={
-                                                                    handleToggle
-                                                                }
+                                                                checked={inputs.privacy}
+                                                                onChange={handleToggle}
                                                                 name="privacy"
                                                             />
                                                         }
